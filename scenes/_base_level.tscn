@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://bt2yw1udn8abs"]
+
+[ext_resource type="Script" uid="uid://cko7kgx8rlrov" path="res://scripts/game/level.gd" id="1_4owf3"]
+[ext_resource type="PackedScene" uid="uid://cactn3k8hlq7u" path="res://scenes/menu/escape_manu.tscn" id="1_6w546"]
+[ext_resource type="Script" uid="uid://drodjp4nv2h6e" path="res://scripts/game/main_camera.gd" id="2_4owf3"]
+[ext_resource type="Script" uid="uid://brvlybq6ri1h7" path="res://scripts/game/character_controller.gd" id="4_oddqk"]
+[ext_resource type="Script" uid="uid://ngopx1m830ew" path="res://scripts/game/cursor_3d.gd" id="5_7joe4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_oddqk"]
+
+[sub_resource type="Sky" id="Sky_ufo62"]
+sky_material = SubResource("ProceduralSkyMaterial_oddqk")
+
+[sub_resource type="Environment" id="Environment_7joe4"]
+background_mode = 2
+sky = SubResource("Sky_ufo62")
+
+[node name="BaseLevel" type="Node3D"]
+script = ExtResource("1_4owf3")
+
+[node name="EscapeManu" parent="." instance=ExtResource("1_6w546")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7joe4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.746754, 0.54787, -0.37709, 0, 0.566967, 0.823741, 0.6651, -0.615132, 0.423385, 0, 3.54222, 0)
+shadow_enabled = true
+
+[node name="MainCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.45744, 3.90106)
+script = ExtResource("2_4owf3")
+metadata/_custom_type_script = "uid://drodjp4nv2h6e"
+
+[node name="CharacterController" type="Node" parent="."]
+script = ExtResource("4_oddqk")
+metadata/_custom_type_script = "uid://brvlybq6ri1h7"
+
+[node name="Cursor3D" type="Node3D" parent="."]
+script = ExtResource("5_7joe4")
+metadata/_custom_type_script = "uid://ngopx1m830ew"

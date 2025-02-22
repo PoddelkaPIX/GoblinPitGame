@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://coyftkg3qxgoc"]
+
+[ext_resource type="Script" uid="uid://cbweha6owy7rk" path="res://scripts/menu/settings_menu.gd" id="1_qk8rs"]
+[ext_resource type="Script" uid="uid://3b5torg7j5m5" path="res://scripts/menu/settings_menu_tab_container.gd" id="2_0sh77"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_qk8rs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+script = ExtResource("2_0sh77")
+
+[node name="Game" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/Game"]
+layout_mode = 2
+text = "смчясяс"
+
+[node name="Audio" type="PanelContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="BackBtn" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 31
+text = "НАЗАД"
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/BackBtn" to="." method="_on_back_btn_pressed"]

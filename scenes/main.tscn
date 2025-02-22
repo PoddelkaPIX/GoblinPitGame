@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwrmikuk6mhph"]
+
+[ext_resource type="Script" uid="uid://cnw5oeufmu1wj" path="res://main.gd" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://bs5hnec605087" path="res://scenes/menu/main_menu.tscn" id="2_0wfyh"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_o5qli")
+
+[node name="MainMenu" parent="." node_paths=PackedStringArray("main_node") instance=ExtResource("2_0wfyh")]
+unique_name_in_owner = true
+main_node = NodePath("..")

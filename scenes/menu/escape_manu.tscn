@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=3 uid="uid://cactn3k8hlq7u"]
+
+[ext_resource type="Script" uid="uid://dluomgkddrw4f" path="res://scripts/menu/escape_manu.gd" id="1_3uefr"]
+[ext_resource type="PackedScene" uid="uid://coyftkg3qxgoc" path="res://scenes/menu/settings_menu.tscn" id="2_ynjep"]
+
+[node name="EscapeManu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_3uefr")
+
+[node name="EscapeMenuContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="EscapeMenuContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EscapeMenuContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -54.0
+offset_right = 150.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ContinueBtn" type="Button" parent="EscapeMenuContainer/VBoxContainer"]
+layout_mode = 2
+text = "KEY_CONTINUE"
+
+[node name="SettingsBtn" type="Button" parent="EscapeMenuContainer/VBoxContainer"]
+layout_mode = 2
+text = "KEY_SETTINGS"
+
+[node name="HSeparator" type="HSeparator" parent="EscapeMenuContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExitBtn" type="Button" parent="EscapeMenuContainer/VBoxContainer"]
+layout_mode = 2
+text = "ВЫЙТИ В ГЛАВНОЕ МЕНЮ"
+
+[node name="SettingsMenu" parent="." node_paths=PackedStringArray("back_menu") instance=ExtResource("2_ynjep")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+back_menu = NodePath("../EscapeMenuContainer")
+
+[connection signal="pressed" from="EscapeMenuContainer/VBoxContainer/ContinueBtn" to="." method="_on_continue_btn_pressed"]
+[connection signal="pressed" from="EscapeMenuContainer/VBoxContainer/SettingsBtn" to="." method="_on_settings_btn_pressed"]
+[connection signal="pressed" from="EscapeMenuContainer/VBoxContainer/ExitBtn" to="." method="_on_exit_btn_pressed"]

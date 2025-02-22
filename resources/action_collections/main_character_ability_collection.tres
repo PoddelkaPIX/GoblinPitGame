@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ActionCollection" load_steps=3 format=3 uid="uid://dvk7bx10atdrb"]
+
+[ext_resource type="Script" uid="uid://ruucld4uot3d" path="res://scripts/plagins/game_actions/action_collection_res.gd" id="1_u0xl8"]
+[ext_resource type="Script" uid="uid://cyybnnvdmc70t" path="res://scripts/plagins/game_actions/action.gd" id="1_ytm5j"]
+
+[resource]
+script = ExtResource("1_u0xl8")
+_slots = Dictionary[String, ExtResource("1_ytm5j")]({})
+metadata/_custom_type_script = "uid://ruucld4uot3d"

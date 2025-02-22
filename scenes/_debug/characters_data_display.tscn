@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://7keoouqkwktv"]
+
+[ext_resource type="Script" uid="uid://dts1indrwjux2" path="res://scripts/_debug/characters_data_display.gd" id="1_smixd"]
+
+[node name="CharactersDataDisplay" type="Control"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 3
+anchor_left = 0.844
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 299.52
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 10
+size_flags_vertical = 3
+script = ExtResource("1_smixd")
+
+[node name="Tree" type="Tree" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+column_titles_visible = true
+select_mode = 1

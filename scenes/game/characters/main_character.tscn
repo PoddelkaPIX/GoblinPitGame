@@ -1,0 +1,146 @@
+[gd_scene load_steps=23 format=3 uid="uid://uy666jan3vdv"]
+
+[ext_resource type="PackedScene" uid="uid://blf743lgw6arm" path="res://scenes/_base_character.tscn" id="1_q6uc8"]
+[ext_resource type="PackedScene" uid="uid://dg40y0oxg1p5l" path="res://assets/models/fate_test.gltf" id="2_bk4g5"]
+[ext_resource type="Script" uid="uid://c500bft6fbu11" path="res://scripts/game/character_controller_receiver.gd" id="4_m2lkq"]
+[ext_resource type="Script" uid="uid://bdbltdhbjc404" path="res://scripts/plagins/game_status_effects/status_effect_manager.gd" id="4_pyo4o"]
+[ext_resource type="Script" uid="uid://if6wn584e0jw" path="res://scripts/plagins/game_attributes/attribute_res.gd" id="4_qjsrm"]
+[ext_resource type="Script" uid="uid://cvtcldvov5cp1" path="res://scripts/game/characters/main_characer_animations.gd" id="5_qjsrm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_q6uc8"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mriam"]
+animation = &"move_forward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dm10f"]
+animation = &"move_back"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_e3ev2"]
+animation = &"move_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hr5pv"]
+animation = &"move_left"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_0imv0"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_mriam")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_dm10f")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_e3ev2")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_hr5pv")
+blend_point_3/pos = Vector2(1, 0)
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8wiqe"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m2lkq"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pyo4o"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fd8tb"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n3xn3"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qllc4"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fmk0c"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qjsrm"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mriam"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qjsrm"]
+states/Walk/node = SubResource("AnimationNodeBlendSpace2D_0imv0")
+states/Walk/position = Vector2(556, 28)
+states/attack/node = SubResource("AnimationNodeAnimation_8wiqe")
+states/attack/position = Vector2(703, 195)
+states/idle/node = SubResource("AnimationNodeAnimation_m2lkq")
+states/idle/position = Vector2(419, 180)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_pyo4o"), "idle", "Walk", SubResource("AnimationNodeStateMachineTransition_fd8tb"), "Walk", "attack", SubResource("AnimationNodeStateMachineTransition_n3xn3"), "attack", "Walk", SubResource("AnimationNodeStateMachineTransition_qllc4"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_fmk0c"), "Walk", "idle", SubResource("AnimationNodeStateMachineTransition_qjsrm"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_mriam")]
+
+[node name="MainCharacter" instance=ExtResource("1_q6uc8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01302, 0)
+shape = SubResource("CapsuleShape3D_q6uc8")
+
+[node name="FSM" parent="." index="1"]
+unique_name_in_owner = true
+
+[node name="blockbench_export" parent="." index="3" instance=ExtResource("2_bk4g5")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Human" parent="blockbench_export/Node" index="0"]
+transform = Transform3D(0.173648, 0, -0.984808, 0, 1, 0, 0.984808, 0, 0.173648, 0.015625, 0.375, -0.0625)
+
+[node name="HipL2" parent="blockbench_export/Node/Human" index="0"]
+transform = Transform3D(-0.0736715, 0.331302, 0.940644, 0.0571856, 0.943059, -0.327674, -0.995642, 0.0296511, -0.0884222, -0.046875, -0.0390625, 0)
+
+[node name="LegL2" parent="blockbench_export/Node/Human/HipL2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, -0.1875, 0)
+
+[node name="HipR2" parent="blockbench_export/Node/Human" index="1"]
+transform = Transform3D(0.953717, -0.300706, 0, 0.300706, 0.953717, 0, 0, 0, 1, 0.0776502, -0.046875, 0.00542651)
+
+[node name="LegR2" parent="blockbench_export/Node/Human/HipR2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.976296, 0.21644, 0, -0.21644, 0.976296, 0, -0.1875, 0)
+
+[node name="Body" parent="blockbench_export/Node/Human" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00691986, 0.0148391, 0.00122016)
+
+[node name="shoulderR2" parent="blockbench_export/Node/Human/Body" index="2"]
+transform = Transform3D(0.951736, -0.167731, -0.257029, 0.0771794, 0.941341, -0.328514, 0.297054, 0.292821, 0.908853, 0.114802, 0.210938, -0.0307752)
+
+[node name="armR2" parent="blockbench_export/Node/Human/Body/shoulderR2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, 0, -0.1875, 0)
+
+[node name="Axe" parent="blockbench_export/Node/Human/Body/shoulderR2/armR2" index="1"]
+transform = Transform3D(0.451493, 0.741193, 0.496776, 0.0715691, -0.585041, 0.80784, 0.8894, -0.32918, -0.317188, -0.161506, -0.00972905, 0.0431034)
+
+[node name="shoulderL2" parent="blockbench_export/Node/Human/Body" index="3"]
+transform = Transform3D(0.924512, 0.31613, 0.212932, -0.367786, 0.886556, 0.28063, -0.100061, -0.337759, 0.935899, -0.114802, 0.242188, 0.0307752)
+
+[node name="armL2" parent="blockbench_export/Node/Human/Body/shoulderL2" index="1"]
+transform = Transform3D(0.79806, -0.393487, 0.456365, 0.369788, -0.278164, -0.8865, 0.475771, 0.876238, -0.0764848, 0, -0.1875, 0)
+
+[node name="Head" parent="blockbench_export/Node/Human" index="3"]
+transform = Transform3D(0.21644, 0, 0.976296, 0, 1, 0, -0.976296, 0, 0.21644, 0, 0.28125, 0)
+
+[node name="StatusEffectManager" type="Node" parent="." index="4"]
+script = ExtResource("4_pyo4o")
+metadata/_custom_type_script = "uid://bdbltdhbjc404"
+
+[node name="HP" type="Node" parent="AttributeManager" index="0"]
+script = ExtResource("4_qjsrm")
+value = 1.0
+metadata/_custom_type_script = "uid://if6wn584e0jw"
+
+[node name="MoveSpeed" type="Node" parent="AttributeManager" index="1"]
+script = ExtResource("4_qjsrm")
+value = 100.0
+metadata/_custom_type_script = "uid://if6wn584e0jw"
+
+[node name="AnimationTree" parent="." index="6"]
+root_node = NodePath("../blockbench_export")
+tree_root = SubResource("AnimationNodeStateMachine_qjsrm")
+anim_player = NodePath("../blockbench_export/AnimationPlayer")
+parameters/Walk/blend_position = Vector2(-0.62201, 0.0044843)
+script = ExtResource("5_qjsrm")
+
+[node name="CharacterControllerReceiver" type="Node" parent="." index="7" node_paths=PackedStringArray("_action_move", "_action_turn", "_move_speed_attribute")]
+script = ExtResource("4_m2lkq")
+_action_move = NodePath("../ActionManager/ActionMove")
+_action_turn = NodePath("../ActionManager/ActionTurn")
+_move_speed_attribute = NodePath("../AttributeManager/MoveSpeed")
+metadata/_custom_type_script = "uid://c500bft6fbu11"
+
+[editable path="blockbench_export"]

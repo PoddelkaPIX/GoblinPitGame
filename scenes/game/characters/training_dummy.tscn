@@ -1,0 +1,61 @@
+[gd_scene load_steps=15 format=3 uid="uid://cnxlnub0g4m3a"]
+
+[ext_resource type="PackedScene" uid="uid://blf743lgw6arm" path="res://scenes/_base_character.tscn" id="1_pvr7y"]
+[ext_resource type="PackedScene" uid="uid://dedibbvj6q6si" path="res://assets/models/training_dummy.gltf" id="2_hfku0"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_m7iw1"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fnmta"]
+animation = &"hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_cjexn"]
+animation = &"hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xqf7l"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3tieo"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_cosme"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_36y8o"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_l48i5"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mi4qd"]
+switch_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_66eyj"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8npga"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jm1yo"]
+states/hit/node = SubResource("AnimationNodeAnimation_cjexn")
+states/hit/position = Vector2(616, 79)
+"states/hit 2/node" = SubResource("AnimationNodeAnimation_fnmta")
+"states/hit 2/position" = Vector2(628, 166)
+states/idle/node = SubResource("AnimationNodeAnimation_xqf7l")
+states/idle/position = Vector2(335, 88)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_3tieo"), "idle", "hit", SubResource("AnimationNodeStateMachineTransition_cosme"), "hit 2", "hit", SubResource("AnimationNodeStateMachineTransition_36y8o"), "hit", "hit 2", SubResource("AnimationNodeStateMachineTransition_l48i5"), "idle", "hit 2", SubResource("AnimationNodeStateMachineTransition_mi4qd"), "hit", "idle", SubResource("AnimationNodeStateMachineTransition_66eyj"), "hit 2", "idle", SubResource("AnimationNodeStateMachineTransition_8npga")]
+
+[node name="TrainingDummy" instance=ExtResource("1_pvr7y")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0073, 0)
+shape = SubResource("CapsuleShape3D_m7iw1")
+
+[node name="blockbench_export" parent="." index="3" instance=ExtResource("2_hfku0")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, -0.175279)
+
+[node name="AnimationTree" parent="." index="5"]
+root_node = NodePath("../blockbench_export")
+tree_root = SubResource("AnimationNodeStateMachine_jm1yo")
+anim_player = NodePath("../blockbench_export/AnimationPlayer")
+
+[editable path="blockbench_export"]
