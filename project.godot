@@ -25,6 +25,7 @@ InputHelper="*res://addons/input_helper/input_helper.gd"
 Debug="*res://scripts/global/debug.gd"
 Audio="*res://addons/easy_audio/autoload.gd"
 Save="*res://addons/easy_saving/autoload.gd"
+Game="*res://scripts/global/game.gd"
 
 [display]
 

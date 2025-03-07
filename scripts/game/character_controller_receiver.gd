@@ -15,7 +15,7 @@ signal character_controller_changed(character_controller: CharacterController)
 @export_category('Flags')
 @export var is_disabled = false
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if is_disabled: return
 	mevement()
 	turning()

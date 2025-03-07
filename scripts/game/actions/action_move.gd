@@ -11,6 +11,6 @@ func move(dir: Vector3, power: int) -> void:
 
 func _execute():
 	pass
-	
+
 func _stop():
 	pass

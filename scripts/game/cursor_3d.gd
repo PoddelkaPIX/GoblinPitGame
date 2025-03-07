@@ -1,6 +1,6 @@
 class_name Cursor3D extends Node3D
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	#var cursor_input_dir: Vector2 = Input.get_vector('cursor_left', 'cursor_right', 'cursor_up', 'cursor_down')
 	#var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	#

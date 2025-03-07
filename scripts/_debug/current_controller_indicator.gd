@@ -8,7 +8,7 @@ func _ready() -> void:
 	InputHelper.device_changed.connect(_on_device_changed)
 	_on_device_changed(null, InputHelper.device_index)
 
-func _on_device_changed(devide, index):
+func _on_device_changed(_devide, index):
 	if index == -1:
 		keyboard.visible = true
 		gamepad.visible = false

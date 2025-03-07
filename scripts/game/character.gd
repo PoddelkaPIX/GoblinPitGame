@@ -1,14 +1,12 @@
 @icon('uid://bilrk5sajq8d')
 class_name Character extends CharacterBody3D
 
-@onready var fsm: FSM = %FSM
+var gravity: float = ProjectSettings['physics/3d/default_gravity']
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
 	friction(delta)
 	apply_gravity(delta)
-
-@onready var gravity: float = ProjectSettings['physics/3d/default_gravity']
 
 func friction(delta):
 	var h_friction: float = 20.0
@@ -25,3 +23,6 @@ func apply_gravity(delta):
 
 func push(direction: Vector3):
 	velocity += get_physics_process_delta_time() * direction
+
+func _on_movement_fsm_state_changed(current_state: FSM_State) -> void:
+	%StateLabel.text = current_state.name

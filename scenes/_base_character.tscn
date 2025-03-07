@@ -1,8 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://blf743lgw6arm"]
+[gd_scene load_steps=7 format=3 uid="uid://blf743lgw6arm"]
 
 [ext_resource type="Script" uid="uid://h5a853wwunl8" path="res://scripts/game/character.gd" id="1_oiwki"]
-[ext_resource type="Script" uid="uid://bwxrc2aw2k0o8" path="res://scripts/plagins/game_attributes/attribute_manager.gd" id="2_aah5n"]
-[ext_resource type="Script" uid="uid://dw5p3qjw22x56" path="res://scripts/plagins/game_actions/action_manager.gd" id="2_b62tj"]
 [ext_resource type="Script" uid="uid://f53lpsuhhgqg" path="res://scripts/plagins/finit_state_machine/finite_state_machine.gd" id="2_eapun"]
 [ext_resource type="Script" uid="uid://ca4nqygpg4gij" path="res://scripts/game/actions/action_move.gd" id="3_dmfj6"]
 [ext_resource type="Script" uid="uid://c6osbft6wlqrd" path="res://scripts/plagins/finit_state_machine/fsm_state.gd" id="3_mjcs1"]
@@ -12,109 +10,101 @@
 [node name="BaseCharacter" type="CharacterBody3D" groups=["Character"]]
 script = ExtResource("1_oiwki")
 
-[node name="FSM" type="Node" parent="."]
+[node name="LifeFSM" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_eapun")
 metadata/_custom_type_script = "uid://f53lpsuhhgqg"
 
-[node name="Idle" type="Node" parent="FSM"]
+[node name="Alive" type="Node" parent="LifeFSM"]
 script = ExtResource("3_mjcs1")
 metadata/_custom_type_script = "uid://c6osbft6wlqrd"
 
-[node name="ToWalk" type="Node" parent="FSM/Idle" node_paths=PackedStringArray("to")]
+[node name="ToDeath" type="Node" parent="LifeFSM/Alive" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
-to = NodePath("../../Walk")
+to = NodePath("../../Death")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="ToRun" type="Node" parent="FSM/Idle" node_paths=PackedStringArray("to")]
+[node name="Death" type="Node" parent="LifeFSM"]
+script = ExtResource("3_mjcs1")
+metadata/_custom_type_script = "uid://c6osbft6wlqrd"
+
+[node name="ActionFSM" type="Node" parent="."]
+script = ExtResource("2_eapun")
+metadata/_custom_type_script = "uid://f53lpsuhhgqg"
+
+[node name="Nothing" type="Node" parent="ActionFSM"]
+script = ExtResource("3_mjcs1")
+metadata/_custom_type_script = "uid://c6osbft6wlqrd"
+
+[node name="MovementFSM" type="Node" parent="."]
+script = ExtResource("2_eapun")
+metadata/_custom_type_script = "uid://f53lpsuhhgqg"
+
+[node name="Nothing" type="Node" parent="MovementFSM"]
+script = ExtResource("3_mjcs1")
+metadata/_custom_type_script = "uid://c6osbft6wlqrd"
+
+[node name="ToRun" type="Node" parent="MovementFSM/Nothing" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
 to = NodePath("../../Run")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="ToDeath" type="Node" parent="FSM/Idle" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Death")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="Walk" type="Node" parent="FSM"]
-script = ExtResource("3_mjcs1")
-metadata/_custom_type_script = "uid://c6osbft6wlqrd"
-
-[node name="ToRun" type="Node" parent="FSM/Walk" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Run")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="ToIdle" type="Node" parent="FSM/Walk" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Idle")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="ToDeath" type="Node" parent="FSM/Walk" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Death")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="Run" type="Node" parent="FSM"]
-script = ExtResource("3_mjcs1")
-metadata/_custom_type_script = "uid://c6osbft6wlqrd"
-
-[node name="ToWalk" type="Node" parent="FSM/Run" node_paths=PackedStringArray("to")]
+[node name="ToWalk" type="Node" parent="MovementFSM/Nothing" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
 to = NodePath("../../Walk")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="ToIdle" type="Node" parent="FSM/Run" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Idle")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="ToDeath" type="Node" parent="FSM/Run" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Death")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="Hit" type="Node" parent="FSM"]
+[node name="Walk" type="Node" parent="MovementFSM"]
 script = ExtResource("3_mjcs1")
 metadata/_custom_type_script = "uid://c6osbft6wlqrd"
 
-[node name="ToDeath" type="Node" parent="FSM/Hit" node_paths=PackedStringArray("to")]
-script = ExtResource("4_yqkxo")
-to = NodePath("../../Death")
-metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
-
-[node name="ToRun" type="Node" parent="FSM/Hit" node_paths=PackedStringArray("to")]
+[node name="ToRun" type="Node" parent="MovementFSM/Walk" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
 to = NodePath("../../Run")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="ToWalk" type="Node" parent="FSM/Hit" node_paths=PackedStringArray("to")]
+[node name="ToNothing" type="Node" parent="MovementFSM/Walk" node_paths=PackedStringArray("to")]
+script = ExtResource("4_yqkxo")
+to = NodePath("../../Nothing")
+metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
+
+[node name="Run" type="Node" parent="MovementFSM"]
+script = ExtResource("3_mjcs1")
+metadata/_custom_type_script = "uid://c6osbft6wlqrd"
+
+[node name="ToWalk" type="Node" parent="MovementFSM/Run" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
 to = NodePath("../../Walk")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="ToIdle" type="Node" parent="FSM/Hit" node_paths=PackedStringArray("to")]
+[node name="ToNothing" type="Node" parent="MovementFSM/Run" node_paths=PackedStringArray("to")]
 script = ExtResource("4_yqkxo")
-to = NodePath("../../Idle")
+to = NodePath("../../Nothing")
 metadata/_custom_type_script = "uid://cgwbrpeyp3jsx"
 
-[node name="Death" type="Node" parent="FSM"]
-script = ExtResource("3_mjcs1")
-metadata/_custom_type_script = "uid://c6osbft6wlqrd"
+[node name="StateHandlers" type="Node" parent="."]
 
-[node name="ActionManager" type="Node" parent="."]
-script = ExtResource("2_b62tj")
-metadata/_custom_type_script = "uid://dw5p3qjw22x56"
+[node name="Attributes" type="Node" parent="."]
 
-[node name="ActionMove" type="Node" parent="ActionManager"]
+[node name="Abilities" type="Node" parent="."]
+
+[node name="Actions" type="Node" parent="."]
+
+[node name="ActionMove" type="Node" parent="Actions"]
 script = ExtResource("3_dmfj6")
 metadata/_custom_type_script = "uid://ca4nqygpg4gij"
 
-[node name="ActionTurn" type="Node" parent="ActionManager"]
+[node name="ActionTurn" type="Node" parent="Actions"]
 script = ExtResource("4_ni3t0")
 metadata/_custom_type_script = "uid://ma8fa010n13b"
 
-[node name="AttributeManager" type="Node" parent="."]
-script = ExtResource("2_aah5n")
-metadata/_custom_type_script = "uid://bwxrc2aw2k0o8"
-
 [node name="AnimationTree" type="AnimationTree" parent="."]
+
+[node name="StateLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50201, 0)
+billboard = 1
+texture_filter = 2
+text = "IDLE"
+
+[connection signal="state_changed" from="MovementFSM" to="." method="_on_movement_fsm_state_changed"]

@@ -19,7 +19,6 @@ signal cooldown_updated(total, value)
 @export var _recovery_time: float = 0.1
 @export var _cancel_time: float = 0.2
 
-
 var Fsm = FSM.new()
 
 var READY_STATE = FSM_State.new('Ready', [
